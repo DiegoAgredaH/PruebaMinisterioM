@@ -1,15 +1,22 @@
-import { Paper, TextField } from '@mui/material';
+import { Paper, TextField, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useFetch } from '../hooks/useFetch'
 import { Earthquake } from './Earthquake';
 
+const ITEMS_PER_PAGE = 19;
+
 export const EarthquakesList = () => {
+
 
     const { data, loading } = useFetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');
     const [filteredData, setFilteredData] = useState([])
     const [term, setTerm] = useState('');
 
+    const [currentPage, setCurrentPage] = useState(0)
 
+    const [items, setItems] = useState([])
+
+    // filtrado de datos
     useEffect(() => {
         if (!loading) {
             let filtered = data.filter(earthquake =>
@@ -22,6 +29,7 @@ export const EarthquakesList = () => {
 
             )
             setFilteredData(filtered)
+            setItems([...filtered].splice(0, ITEMS_PER_PAGE))
         }
     }, [loading]);
 
@@ -31,7 +39,27 @@ export const EarthquakesList = () => {
         return xLower.includes(termLower) || !termLower;
     })
 
+    const prevHandler = () => {
+        const prevPage = currentPage -1;
 
+        if (prevPage < 0) return;
+
+        const firstIndex = prevPage * ITEMS_PER_PAGE
+
+        setItems([...filteredData].splice(firstIndex, ITEMS_PER_PAGE))
+        setCurrentPage(prevPage)
+
+    }
+    
+    const nextHandler = () => {
+        const allEarthquakes = filteredData.length;
+        const nextPage = currentPage + 1;
+        const firstIndex = nextPage * ITEMS_PER_PAGE
+
+        if (firstIndex === allEarthquakes) return;
+        setItems([...filteredData].splice(firstIndex, ITEMS_PER_PAGE))
+        setCurrentPage(nextPage)
+    }
 
 
     return (
@@ -57,7 +85,7 @@ export const EarthquakesList = () => {
 
                             <div className='card-columns'>
                                 {
-                                    filteredData.filter(searchingTerm(term)).map((earthquake, i) => (
+                                    items.filter(searchingTerm(term)).map((earthquake, i) => (
                                         <Earthquake
                                             key={i}
                                             title={earthquake.properties.title}
@@ -71,6 +99,8 @@ export const EarthquakesList = () => {
                                     ))
                                 }
                             </div>
+                            <Button onClick={() => prevHandler()} variant="outlined">Anterior</Button>
+                            <Button onClick={() => nextHandler()}variant="outlined">Siguiente</Button>
                         </Paper>
                     )
             }

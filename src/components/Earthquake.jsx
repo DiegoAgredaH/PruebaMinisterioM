@@ -1,6 +1,8 @@
 import React from 'react'
 
-export const Earthquake = ({ title, status, lat, long, prof }) => {
+export const Earthquake = (props) => {
+
+    const { title, status, lat, long, prof } = props
 
     return (
         <>
@@ -8,10 +10,10 @@ export const Earthquake = ({ title, status, lat, long, prof }) => {
                 <div className='row no-gutters'>
                     <div className='col-md-12'></div>
                     <div className='card-body'>
-                        <h5 card-title><b>{title}</b></h5>                        
-                        <p card-text>{status}</p>                        
-                        <p card-text><b>Lat:</b> {lat} <b>Long: </b>{long}</p>                        
-                        <p card-text><b>Prof:</b> {prof}</p>                        
+                        <h5><b>{title}</b></h5>                        
+                        <p>{status}</p>                        
+                        <p><b>Lat:</b> {lat} <b>Long: </b>{long}</p>                        
+                        <p><b>Prof:</b> {prof}</p>                        
                     </div>
                 </div>
             </div>
