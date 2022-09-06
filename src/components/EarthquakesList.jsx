@@ -81,7 +81,7 @@ export const EarthquakesList = () => {
                                 <br /><br />
 
 
-                            <div className='row rows-cols-1 row-cols-md-3 g-3 animate__animated animate__fadeIn'>
+                            <div className='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-5 g-3 animate__animated animate__fadeIn'>
                                 {
                                     items.filter(searchingTerm(term)).map((earthquake, i) => (
                                         <Earthquake
