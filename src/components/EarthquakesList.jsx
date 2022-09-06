@@ -73,17 +73,15 @@ export const EarthquakesList = () => {
 
                     )
                     : (
-                        <Paper>
+                        <Paper className='container'>
 
-                            <Paper >
                                 <br />
                                 <TextField style={{ margin: 10}} id="outlined-search" label="Buscar por titulo" type="search" variant="outlined"
                                     onChange={(e) => setTerm(e.target.value)}></TextField>
                                 <br /><br />
 
-                            </Paper>
 
-                            <div className='card-columns'>
+                            <div className='row rows-cols-1 row-cols-md-3 g-3 animate__animated animate__fadeIn'>
                                 {
                                     items.filter(searchingTerm(term)).map((earthquake, i) => (
                                         <Earthquake
@@ -99,6 +97,7 @@ export const EarthquakesList = () => {
                                     ))
                                 }
                             </div>
+                            <br/>
                             <Button onClick={() => prevHandler()} variant="outlined">Anterior</Button>
                             <Button onClick={() => nextHandler()}variant="outlined">Siguiente</Button>
                         </Paper>

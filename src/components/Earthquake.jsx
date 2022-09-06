@@ -8,7 +8,6 @@ export const Earthquake = (props) => {
         <>
             <div className='card ms-3' style={{ marginTop: 10}}>
                 <div className='row no-gutters'>
-                    <div className='col-md-12'></div>
                     <div className='card-body'>
                         <h5><b>{title}</b></h5>                        
                         <p>{status}</p>                        
